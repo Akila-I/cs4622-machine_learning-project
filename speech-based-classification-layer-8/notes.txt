@@ -1,0 +1,70 @@
+layer 8 -
+
+  initial (svc) - SVC(kernel='linear', C=1.0, random_state=42)
+    accuracy_score for label_1:  0.9506666666666667
+    accuracy_score for label_2:  0.8125
+    accuracy_score for label_3:  0.9973333333333333
+    accuracy_score for label_4:  0.9426666666666667
+
+  initial (knn) - (n_neighbors=3, weights='distance', n_jobs=7)
+    accuracy_score for label_1:  0.9053333333333333
+    accuracy_score for label_2:  0.9144021739130435
+    accuracy_score for label_3:  0.996
+    accuracy_score for label_4:  0.9573333333333334
+
+  selectKBest with SVC - SVC(kernel='rbf', C=100, random_state=42) / SelectKBest(f_classif, k=100)
+    accuracy_score for label_1:  0.9426666666666667
+    accuracy_score for label_2:  0.9021739130434783
+    accuracy_score for label_3:  0.992
+    accuracy_score for label_4:  0.9613333333333334
+
+  PCA with SVC - SVC(kernel='linear', C=1.0, random_state=42) / PCA(n_components=0.97,svd_solver='full')
+    accuracy_score for label_1:  0.9493333333333334
+    accuracy_score for label_2:  0.7703804347826086
+    accuracy_score for label_3:  0.9973333333333333
+    accuracy_score for label_4:  0.9213333333333333
+
+  HalvingGridSearch with SVC - SVC(kernel='rbf', gamma='scale', C=100, random_state=42) / 'C': [1, 10, 100]
+    !accuracy_score for label_1:  0.9746666666666667
+    accuracy_score for label_2:  0.9415760869565217
+    accuracy_score for label_3:  0.9973333333333333 (can be made 0.998 using PCA 0.97 and rbf kernel)
+    accuracy_score for label_4:  0.9773333333333334
+
+  HalvingGridSearch with KNN - KNeighborsClassifier(n_neighbors=3, weights='distance', n_jobs=7, algorithm='ball_tree') /
+  param_grid = {
+              'n_neighbors': [3, 5, 7],
+              'weights': ['uniform', 'distance'],
+              'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute']
+              }
+    accuracy_score for label_1:  0.9053333333333333
+    accuracy_score for label_2:  0.9144021739130435
+    accuracy_score for label_3:  0.996
+    accuracy_score for label_4:  0.9573333333333334
+
+  PCA + HalvingGridSearch with SVC
+  - PCA(n_components=0.95,svd_solver='full')
+  - param_grid = {
+                'C': [1, 10, 20, 30, 40, 50, 100],
+                'kernel': ['linear', 'rbf', 'poly', 'sigmoid'],
+                'gamma': ['scale', 'auto']
+                }
+  - SVC(**search.best_params_, random_state=42)
+    accuracy_score for label_1:  0.9466666666666667
+    !accuracy_score for label_2:  0.9442934782608695
+    !accuracy_score for label_3:  0.9986666666666667
+    !accuracy_score for label_4:  0.984
+
+  PCA + HalvingGridSearch with KNN
+  - PCA(n_components=0.97,svd_solver='full')
+  - param_grid = {
+                'n_neighbors': [3, 5, 7],
+                'weights': ['uniform', 'distance'],
+                'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
+                'leaf_size': [10, 20, 30, 40, 50],
+                'p': [1, 2]
+                }
+
+    accuracy_score for label_1:  0.9226666666666666
+    accuracy_score for label_2:  0.9279891304347826
+    accuracy_score for label_3:  0.9906666666666667
+    accuracy_score for label_4:  0.956
