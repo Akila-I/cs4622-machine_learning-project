@@ -1,0 +1,44 @@
+layer 8 -
+
+  initial (svc) - SVC(kernel='linear', C=1.0, random_state=42)
+    accuracy_score for label_1:  0.8946666666666667
+    accuracy_score for label_2:  0.7377717391304348
+    accuracy_score for label_3:  0.9933333333333333
+    accuracy_score for label_4:  0.852
+
+  initial (knn) - (n_neighbors=3, weights='distance', n_jobs=7)
+    accuracy_score for label_1:  0.7586666666666667
+    accuracy_score for label_2:  0.7853260869565217
+    accuracy_score for label_3:  0.976
+    accuracy_score for label_4:  0.888
+
+  PCA with SVC - SVC(kernel='linear', C=1.0, random_state=42) / PCA(n_components=0.97,svd_solver='full')
+    accuracy_score for label_1:  0.844
+    accuracy_score for label_2:  0.6331521739130435
+    accuracy_score for label_3:  0.992
+    accuracy_score for label_4:  0.8013333333333333
+
+  HalvingGridSearch with SVC - SVC(kernel='rbf', gamma='scale', C=100, random_state=42) / 'C': [1, 10, 100]
+    accuracy_score for label_1:  0.9506666666666667
+    accuracy_score for label_2:  0.8926630434782609
+    accuracy_score for label_3:  0.9986666666666667
+    accuracy_score for label_4:  0.9533333333333334
+
+  PCA + HalvingGridSearch with SVC
+  - PCA(n_components=0.95,svd_solver='full')
+  - param_grid = {
+                'C': [1, 10, 20, 30, 40, 50, 100],
+                'kernel': ['linear', 'rbf', 'poly', 'sigmoid'],
+                'gamma': ['scale', 'auto']
+                }
+  - SVC(**search.best_params_, random_state=42)
+    accuracy_score for label_1:  0.9066666666666666
+    accuracy_score for label_2:  0.8546195652173914
+    accuracy_score for label_3:  0.9893333333333333
+    accuracy_score for label_4:  0.9253333333333333
+
+  StandardScaler with SVC - SVC(kernel='rbf', gamma='scale', C=100, random_state=42)
+    !accuracy_score for label_1:  0.952
+    !accuracy_score for label_2:  0.9225543478260869
+    !accuracy_score for label_3:  0.9986666666666667
+    !accuracy_score for label_4:  0.96
