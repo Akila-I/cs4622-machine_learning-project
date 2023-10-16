@@ -2,3 +2,5 @@
 */test.csv
 */valid.csv
 */submission*
+/Dataset/*
+*/*pred*.csv
